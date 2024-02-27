@@ -16,14 +16,20 @@
 
 ```bash
 curl -o IPTVAssistantSetup.sh https://raw.githubusercontent.com/murphykfk/IPTVStreamToolkit/main/IPTVAssistantSetup.sh && bash IPTVAssistantSetup.sh
-配置
+```
+
+## 配置
+
 在自己的Debian系统中进行测试，未测试其他系统，作者对代码知识了解不多，可自行尝试。
 
-贡献
+## 贡献
+
 如果您有任何建议或想要贡献代码，请随时提交 Pull Request 或创建 Issue。
 
-致谢
+## 致谢
+
 特别感谢 ihmily 的 DouyinLiveRecorder 项目，自媒体直播源的提取代码来自于此项目。
 
-许可
+## 许可
+
 本项目采用MIT许可证。更多细节请查看 LICENSE 文件。
