@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# 首先检查并安装 sudo 如果需要
+if ! command -v sudo &> /dev/null; then
+    echo "sudo could not be found, attempting to install..."
+    apt-get update && apt-get install -y sudo
+    if [ $? -ne 0 ]; then
+        echo "Failed to install sudo, exiting."
+        exit 1
+    fi
+    echo "sudo has been successfully installed."
+else
+    echo "sudo is already installed."
+fi
+
 # 首先检查并安装python3-pip如果需要
 if ! command -v pip3 &> /dev/null; then
     echo "pip3 could not be found, attempting to install python3-pip..."
