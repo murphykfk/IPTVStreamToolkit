@@ -1,5 +1,15 @@
 #!/bin/bash
 
+# 首先检查并安装python3-pip如果需要
+if ! command -v pip3 &> /dev/null; then
+    echo "pip3 could not be found, attempting to install python3-pip..."
+    apt update && apt install -y python3-pip
+    if [ $? -ne 0 ]; then
+        echo "Failed to install python3-pip, exiting."
+        exit 1
+    fi
+fi
+
 # 指定下载目录
 TARGET_DIR="/root/iptv"
 
