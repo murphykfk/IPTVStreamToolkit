@@ -507,15 +507,32 @@ def user_input_for_url_and_keywords():
             break
 
     return urls_and_keyword_pairs
+
 def install_nginx():
-    """安装 Nginx"""
+    """安装 Nginx 并设置监听端口为8008"""
     try:
         print("正在安装 Nginx...")
         subprocess.run(["sudo", "apt-get", "update"], check=True)
         subprocess.run(["sudo", "apt-get", "install", "-y", "nginx"], check=True)
         print("Nginx 安装成功。")
+        
+        # 修改Nginx配置文件以监听端口8008
+        print("正在设置Nginx监听端口为8008...")
+        with open("/etc/nginx/sites-available/default", "r") as file:
+            config = file.read()
+        
+        # 假设默认配置使用80端口，我们将其替换为8008
+        config = config.replace("listen 80;", "listen 8008;")
+        
+        with open("/etc/nginx/sites-available/default", "w") as file:
+            file.write(config)
+        
+        # 重启Nginx以应用配置更改
+        subprocess.run(["sudo", "systemctl", "restart", "nginx"], check=True)
+        print("Nginx已更新至监听端口8008。")
+        
     except Exception as e:
-        print(f"安装 Nginx 时出错: {e}")
+        print(f"安装或配置Nginx时出错: {e}")
 
 def create_empty_m3u_file(m3u_file_path):
     try:
