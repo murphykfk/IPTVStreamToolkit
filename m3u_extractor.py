@@ -482,8 +482,11 @@ def format_stream_info_to_m3u(stream_info):
     stream_url = stream_info.get('m3u8_url') or stream_info.get('flv_url', '')
     
     if stream_url:  # 确保 stream_url 存在，否则可能返回空字符串或错误信息
-        m3u_entry = f"#EXTINF:-1, {anchor_name}\n{stream_url}\n"
+        # 加入group-title="自媒体"
+        m3u_entry = f"#EXTINF:-1 group-title=\"自媒体\", {anchor_name}\n{stream_url}\n"
         return m3u_entry
+    else:
+        return ""  # 如果没有有效的stream_url，则返回空字符串
 
 
 def user_input_for_url_and_keywords():
