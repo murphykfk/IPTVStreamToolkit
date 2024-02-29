@@ -42,10 +42,21 @@ curl -s -O https://raw.githubusercontent.com/murphykfk/IPTVStreamToolkit/main/up
 pip3 install PyExecJS
 
 # 设置Cron任务以每5分钟执行update_live_streams.py脚本
-(crontab -l 2>/dev/null; echo "*/5 * * * * python3 $TARGET_DIR/update_live_streams.py") | crontab -
+CRON_JOB="*/5 * * * * python3 $TARGET_DIR/update_live_streams.py"
+
+# 检查Cron任务是否已存在
+if ! crontab -l | grep -Fq "$CRON_JOB"; then
+  (crontab -l 2>/dev/null; echo "$CRON_JOB") | crontab -
+fi
+
 
 # 将别名添加到.bashrc，使其永久有效
-echo "alias iptv='python3 $TARGET_DIR/m3u_extractor.py'" >> ~/.bashrc
+ALIAS_CMD="alias iptv='python3 $TARGET_DIR/m3u_extractor.py'"
+
+# 检查别名是否已存在
+if ! grep -Fxq "$ALIAS_CMD" ~/.bashrc; then
+  echo "$ALIAS_CMD" >> ~/.bashrc
+fi
 
 # 重新加载.bashrc以立即应用更改
 source ~/.bashrc
