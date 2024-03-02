@@ -568,7 +568,7 @@ server {
             file.write(nginx_config)
         subprocess.run(["sudo", "nginx", "-t"], check=True)
         subprocess.run(["sudo", "systemctl", "reload", "nginx"], check=True)
-        print("Nginx 配置已更新，.m3u 文件可通过以下地址访问: http://您的服务器IP或域名/live.m3u")
+        print("Nginx 配置已更新，.m3u 文件可通过以下地址访问: http://您的服务器IP或域名:8008/live.m3u")
     except subprocess.CalledProcessError as e:
         print(f"Nginx 配置测试失败，请检查错误: {e}")
     except Exception as e:
