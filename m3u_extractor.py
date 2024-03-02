@@ -525,7 +525,7 @@ def install_nginx():
             config = file.read()
         
         # 假设默认配置使用80端口，我们将其替换为8008
-        config = config.replace("listen 80;", "listen 8008;")
+        config = config.replace("    listen 80;", "    listen 8008;")
         
         with open("/etc/nginx/sites-available/default", "w") as file:
             file.write(config)
