@@ -599,7 +599,7 @@ def main():
             create_empty_m3u_file(M3U_FILE_PATH)  # 使用常量路径创建文件
             configure_nginx_for_m3u()
             server_ip_or_name = input("请输入您的服务器IP或域名，用于生成直播源链接: ")
-            print(f"{GREEN}直播源链接地址已生成。地址为: http://{server_ip_or_name}/live.m3u{RESET}")
+            print(f"{GREEN}直播源链接地址已生成。地址为: http://{server_ip_or_name}:8008/live.m3u{RESET}")
 
 
         elif choice == '2':
