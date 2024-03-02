@@ -522,13 +522,13 @@ def install_nginx():
         # 修改Nginx配置文件以监听端口8008
         print("正在设置Nginx监听端口为8008...")
         with open("/etc/nginx/sites-available/default", "r") as file:
-            config = file.read()
-        
-        # 假设默认配置使用80端口，我们将其替换为8008
-        config = config.replace("    listen 80;", "    listen 8008;")
+            config = file.readlines()
         
         with open("/etc/nginx/sites-available/default", "w") as file:
-            file.write(config)
+            for line in config:
+                if "listen 80;" in line:
+                    line = line.replace("listen 80;", "listen 8008;")
+                file.write(line)
         
         # 重启Nginx以应用配置更改
         subprocess.run(["sudo", "systemctl", "restart", "nginx"], check=True)
