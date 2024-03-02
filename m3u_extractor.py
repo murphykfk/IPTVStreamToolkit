@@ -511,7 +511,7 @@ def user_input_for_url_and_keywords():
 
     return urls_and_keyword_pairs
 
-def install_nginx_and_configure():
+def install_nginx():
     """安装 Nginx 并使用新的配置文件设置监听端口为8008"""
     try:
         print("正在安装 Nginx...")
@@ -555,7 +555,7 @@ def create_empty_m3u_file(m3u_file_path):
 def configure_nginx_for_m3u():
     nginx_config = """
 server {
-    listen 80;
+    listen 8008;
     server_name _;
 
     location /live.m3u {
