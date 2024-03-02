@@ -511,28 +511,34 @@ def user_input_for_url_and_keywords():
 
     return urls_and_keyword_pairs
 
-def install_nginx():
-    """安装 Nginx 并设置监听端口为8008"""
+def install_nginx_and_configure():
+    """安装 Nginx 并使用新的配置文件设置监听端口为8008"""
     try:
         print("正在安装 Nginx...")
         subprocess.run(["sudo", "apt-get", "update"], check=True)
         subprocess.run(["sudo", "apt-get", "install", "-y", "nginx"], check=True)
         print("Nginx 安装成功。")
         
-        # 修改Nginx配置文件以监听端口8008
-        print("正在设置Nginx监听端口为8008...")
-        with open("/etc/nginx/sites-available/default", "r") as file:
-            config = file.readlines()
-        
-        with open("/etc/nginx/sites-available/default", "w") as file:
-            for line in config:
-                if "listen 80;" in line:
-                    line = line.replace("listen 80;", "listen 8008;")
-                file.write(line)
+        # 设置Nginx监听端口为8008并配置对/live.m3u的处理
+        new_config = """
+server {
+    listen 8008;
+    server_name _;
+
+    location /live.m3u {
+        alias /var/www/html/live.m3u;
+    }
+}
+"""
+        config_path = "/etc/nginx/sites-available/default"
+        print("正在更新Nginx配置以监听端口8008...")
+        with open(config_path, "w") as file:
+            file.write(new_config)
+        print("Nginx配置更新完成。")
         
         # 重启Nginx以应用配置更改
         subprocess.run(["sudo", "systemctl", "restart", "nginx"], check=True)
-        print("Nginx已更新至监听端口8008。")
+        print("Nginx已重启，配置更新完成。")
         
     except Exception as e:
         print(f"安装或配置Nginx时出错: {e}")
